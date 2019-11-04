@@ -15,23 +15,18 @@
     </head>
     <body>
         <form class="formularioDetalleEvento" action="Servlet">
-        <h1>Sistema Gestor de Eventos</h1>
-        
+            <h1>Sistema Gestor de Eventos</h1>
+
             <div class="contenedor">
-                
+
                 <div class="input-contenedor">
                     <label for="ListarExpositores">Expositores registrados</label>
-                    
-                    <jsp:useBean id="cn" class="dao.impl.ExpositorDAOImpl" scope="page"></jsp:useBean>
-                        <select>
-                            <option>Expositores</option>
-                        <%
-                            cn.listarExpositor();
-                        %>
-                        </select>
+
+
+                    </select>
                     <input type="submit" name="agregarLista" value="Agregar" class="button">
                 </div>
-                        
+
                 <div class="input-contenedor">
                     <label for="RegistrarExpositor">Registrar expositores</label><br><br>
                     <label for="DNI">DNI</label>
@@ -41,27 +36,32 @@
                     <br><br>
                     <input type="submit" name="agregarRegistrarLista" value="Agregar a lista" class="button">
                 </div>
-                
-                        
+
+
                 <div class="input-contenedor">
                     <label for="ListarExpositores">Expositores registrados</label>
-                    
-                        <select>
-                            <option> Expositores </option>
-                        <%
-                            cn.listarExpositor();
-                        %>
-                        </select>  
+
+                    <select>
+                        <option hidden selected disabled>Expositores...</option>
+                        <c:forEach items="${expositores}" var="item">
+                            <option value="${item.getIdExpositor()}">
+                                ${item.getExpositorNombre()}
+                            </option>
+                        </c:forEach>
+
+                    </select>  
+
+
                 </div>
-                        
+
                 <div class="input-contenedor">
                     <input type="submit" name="VerLista" value="ver" class="button">
                 </div>
-                        
+
                 <div class="input-contenedor">
                     <input type="submit" name="Continuar" value="continuar" class="button">
                 </div>
-                       
+
             </div>
         </form>
     </body>

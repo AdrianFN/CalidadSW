@@ -14,13 +14,13 @@
     </head>
     <body>
         <div id="contenedor1">
-            <form id = "formularioCrearEvento" action="vistaCrearEvento.jsp">
+            
                 <h1 align="center">Organizador</h1>
                 <div class="contenedor">
                     <label for="crearEvento">Crear evento: </label>
-                    <button type="submit" class="button"> Ir </button>
+                    <button><a href="ServletCrearEvento?action=index">Ir</a></button>
                 </div>
-            </form>
+            
             
             <form id = "formularioTerminarEvento" action="vistaTerminarEvento.jsp">
                 <div class="contenedor">

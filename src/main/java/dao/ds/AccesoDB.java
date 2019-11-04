@@ -23,7 +23,7 @@ public Connection getConnection(){
             Class.forName("com.mysql.jdbc.Driver").newInstance();
             cn= DriverManager.getConnection(
                     "jdbc:mysql://localhost:3306/gestordeeventos",
-                    "root","");
+                    "root","root");
             
         }catch(SQLException e){
         }catch(Exception e){                      

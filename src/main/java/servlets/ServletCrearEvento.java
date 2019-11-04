@@ -51,7 +51,32 @@ public class ServletCrearEvento extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+
+        response.setContentType("text/html;charset=UTF-8"); //texto html
+        String action = request.getParameter("action");
+
+        switch (action) {
+            case "index":
+                index(request, response);
+                break;
+            case "second":
+                second(request, response);
+                break;
+        }
+
+    }
+
+    private void index(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        request.getRequestDispatcher("vistaCrearEvento.jsp").forward(request, response);
+    }
+
+    private void second(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        
+        IExpositorDAO expositorDAO = DAOFactory.getInstance().getExpositorDAO();
+        ArrayList<ExpositorTO> listaExpositor = expositorDAO.listarExpositor();
+        
+        request.setAttribute("expositores", listaExpositor);
+        request.getRequestDispatcher("vistaDetalleEvento.jsp").forward(request, response);
     }
 
     /**
@@ -65,72 +90,59 @@ public class ServletCrearEvento extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
-        response.setContentType("text/html;charset=UTF-8");
-        PrintWriter out = response.getWriter();
-        try {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet ServletCrearEvento</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            
-            if(request.getParameter("btnValidar") != null){
-                String dni = request.getParameter("txtDNI");
-                IUsuarioDAO usuarioDAO = DAOFactory.getInstance().getUsuarioDAO();
-                
-                boolean verificar = usuarioDAO.buscarUsurioPorDNI(dni);
-                String mensaje = "Esperando verificación...";
-                if(verificar){
-                    mensaje = "¡Usuario autentificado!";
-                    
-                    request.setAttribute("mensaje", mensaje);
-                    RequestDispatcher rd = request.getRequestDispatcher("vistaCrearEvento.jsp");
-                    rd.forward(request, response);
-                }
-                else{
-                    mensaje = "Usuario no autentificado";
-                    
-                    request.setAttribute("mensaje", mensaje);
-                    RequestDispatcher rd = request.getRequestDispatcher("vistaCrearEvento.jsp");
-                    rd.forward(request, response);
-                }
-                
-            }
-            
-            if(request.getParameter("btnSiguienteDetalleEvento") != null){
-                String nombreEvento = request.getParameter("txtNombreEvento");
-                String descripcionEvento = request.getParameter("txtDescripcionEvento");
-                
-                EventoTO eventoReceptor = new EventoTO(nombreEvento,descripcionEvento);
-                IEventoDAO eventoDAO = DAOFactory.getInstance().getEventoDAO();
-                
-                boolean evento = eventoDAO.crearEvento(eventoReceptor);
-                if(evento){
-                    /*IExpositorDAO expositorDAO = DAOFactory.getInstance().getExpositorDAO();
-                    ArrayList<ExpositorTO> listaExpositores = new ArrayList<ExpositorTO>();
 
-                    listaExpositores = expositorDAO.listarExpositor();
-                    request.setAttribute("listaExpositores", listaExpositores);
-                    RequestDispatcher rd = request.getRequestDispatcher("vistaDetalleEvento.jsp");
-                    rd.forward(request,response);*/
-                    response.sendRedirect("vistaDetalleEvento.jsp");
-                }
-                else{
-                    out.print("Error al crear el evento");
-                } 
+        response.setContentType("text/html;charset=UTF-8"); //texto html
+        String action = request.getParameter("action");
+
+        switch (action) {
+            case "create1":
+                create1(request, response);
+                break;
+
+        }
+
+    }
+
+    private void create1(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+
+        if (request.getParameter("btnValidar") != null) {
+            String dni = request.getParameter("txtDNI");
+            IUsuarioDAO usuarioDAO = DAOFactory.getInstance().getUsuarioDAO();
+
+            boolean verificar = usuarioDAO.buscarUsurioPorDNI(dni);
+            String mensaje = "Esperando verificación...";
+            if (verificar) {
+                mensaje = "¡Usuario autentificado!";
+
+                request.setAttribute("mensaje", mensaje);
+                request.getRequestDispatcher("vistaCrearEvento.jsp").forward(request, response);
+            } else {
+                mensaje = "Usuario no autentificado";
+
+                request.setAttribute("mensaje", mensaje);
+                request.getRequestDispatcher("vistaCrearEvento.jsp").forward(request, response);
                 
             }
-            
-            //out.println("<h1>Probando servlet crearEvento</h1>");
-            
-            out.println("</body>");
-            out.println("</html>");
-        } finally {
-            out.close();
+
         }
+
+        if (request.getParameter("btnSiguienteDetalleEvento") != null) {
+            String nombreEvento = request.getParameter("txtNombreEvento");
+            String descripcionEvento = request.getParameter("txtDescripcionEvento");
+
+            EventoTO eventoReceptor = new EventoTO(nombreEvento, descripcionEvento);
+            IEventoDAO eventoDAO = DAOFactory.getInstance().getEventoDAO();
+
+            boolean evento = eventoDAO.crearEvento(eventoReceptor);
+            if (evento) {
+                response.sendRedirect("./ServletCrearEvento?action=second");
+            } else {
+                response.sendRedirect("./ServletCrearEvento?action=index");
+            }
+
+        }
+
+        //response.sendRedirect("./events_create?action=second");
     }
 
     /**

@@ -15,7 +15,7 @@
         <link href="css/estiloCrearEvento.css" rel="stylesheet" type="text/css"/>
     </head>
     <body>
-        <form class="formularioCrearEvento" action="ServletCrearEvento" method="post">
+        <form class="formularioCrearEvento" action="ServletCrearEvento?action=create1" method="post">
             <h1>Sistema Gestor de Eventos</h1>
             
             <div class="contenedor">
