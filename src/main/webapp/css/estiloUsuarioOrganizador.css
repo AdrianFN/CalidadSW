@@ -1,0 +1,46 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 14/10/2019, 03:06:07 PM
+    Author     : Adrián
+*/
+body{
+    font-family: Arial, Helvetica, sans-serif;
+    margin: 0;
+    background: url(../imagen/auditorio.png);
+    background-size: cover;
+    background-attachment: fixed;
+}
+
+*{
+    box-sizing: border-box;
+}
+
+.contenedor{
+    width: 100%;
+    padding: 15px;
+}
+
+#contenedor1{
+    width: 460px;
+    height: 370px;
+    background: #ffffff;
+    margin: auto;
+    margin-top: 40px;
+    padding: 3px;
+}
+
+.button{
+    border: none;
+    width: 15%;
+    color: white;
+    font-size: 12px;
+    background: #1a2537;
+    padding: 15px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-left: 90px;
+}
